@@ -16,7 +16,7 @@ type Post = {
   };
 };
 
-type HistoryStore = {
+export type HistoryStore = {
   posts: Record<number, Post>;
   ids: number[];
 };
@@ -26,7 +26,7 @@ const selectAll = (selector: string) =>
   Array.from(document.querySelectorAll(selector));
 const select = (selector: string) => document.querySelector(selector);
 
-const historyStorage = {
+export const historyStorage = {
   get: (cb: (store: HistoryStore) => void) => {
     chrome.storage.sync.get(["posts", "ids"], (result: HistoryStore) => {
       cb({ posts: {}, ids: [], ...result });
