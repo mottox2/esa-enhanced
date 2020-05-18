@@ -44,19 +44,23 @@ const common = {
         ],
       },
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         use: [
           {
             loader: 'babel-loader',
             options: {
               presets: [
-                '@babel/preset-typescript'
+                '@babel/preset-typescript',
+                '@babel/preset-react'
               ]
             }
           }
         ]
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.ts', '.tsx']
   },
   plugins: [
     // Print file sizes
