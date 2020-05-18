@@ -1,7 +1,7 @@
 'use strict';
 
 const SizePlugin = require('size-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const PATHS = require('./paths');
@@ -49,12 +49,11 @@ const common = {
     // Print file sizes
     new SizePlugin(),
     // Copy static assets from `public` folder to `build` folder
-    new CopyWebpackPlugin([
-      {
-        from: '**/*',
-        context: 'public',
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {from: 'public', to: ''}
+      ]
+    }),
     // Extract CSS into separate files
     new MiniCssExtractPlugin({
       filename: '[name].css',
