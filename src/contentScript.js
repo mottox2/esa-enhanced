@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // Content script file will run in the context of web page.
 // With content script you can manipulate the web pages using
@@ -11,10 +11,10 @@
 // For more information on Content Scripts,
 // See https://developer.chrome.com/extensions/content_scripts
 
-import './observer'
+import "./entry";
 
 // Log `title` of current active web page
-const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
+const pageTitle = document.head.getElementsByTagName("title")[0].innerHTML;
 console.log(
   `Page title is: '${pageTitle}' - evaluated by Chrome extension's 'contentScript.js' file`
 );
@@ -22,19 +22,19 @@ console.log(
 // Communicate with background file by sending a message
 chrome.runtime.sendMessage(
   {
-    type: 'GREETINGS',
+    type: "GREETINGS",
     payload: {
-      message: 'Hello, my name is Con. I am from ContentScript.',
+      message: "Hello, my name is Con. I am from ContentScript.",
     },
   },
-  response => {
+  (response) => {
     console.log(response.message);
   }
 );
 
 // Listen for message
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'COUNT') {
+  if (request.type === "COUNT") {
     console.log(`Current count is ${request.payload.count}`);
   }
 
