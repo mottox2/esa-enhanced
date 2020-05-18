@@ -43,6 +43,19 @@ const common = {
           },
         ],
       },
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-typescript'
+              ]
+            }
+          }
+        ]
+      },
     ],
   },
   plugins: [
