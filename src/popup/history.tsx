@@ -1,33 +1,64 @@
 import React from "dom-chef";
 import { historyStorage } from "../history";
 
+const reset = () =>
+  historyStorage.set(
+    {
+      posts: {},
+      ids: [],
+    },
+    () => {
+      console.log("reset");
+      window.close();
+    }
+  );
+
 const render = () => {
   historyStorage.get((store) => {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       const tab = tabs[0];
       if (!tab) return;
 
-      console.log(tab, tab.url);
+      const container = document.getElementById("history");
+      container.append(
+        (
+          <div className="popup-title">
+            <h1>最近読んだ記事</h1>
+            <div className="popup-reset" onClick={reset}>
+              履歴を削除
+            </div>
+          </div>
+        ) as any
+      );
       if (tab.url.search(/esa.io\//) === -1) {
-        console.log("aAwfdww");
-        document.getElementById("history").innerText =
-          "esaサイトで開いてください";
+        container.append(
+          (<div className="message">esa.ioで開いてください</div>) as any
+        );
         return;
       }
 
       const origin = new URL(tab.url).origin;
 
       const { posts, ids } = store;
-      document.getElementById("history").append(
+
+      if (ids.length === 0)
+        container.append(
+          (<div className="message">最近見た記事はありません。</div>) as any
+        );
+
+      container.append(
         (
           <ul className="histories">
-            {ids.join(".")}
             {ids.map((postId) => {
               const post = posts[postId];
               return (
-                <li>
+                <li className={`history ${post.wip ? "is-wip" : ""}`}>
                   <a target="_blank" href={`${origin}/posts/${post.id}`}>
-                    {post.name}
+                    <img src={post.created_by.icon} width={26} height={26} />
+                    <p className="title">
+                      {post.category ? post.category + "/" : ""}
+                      {post.name} {post.tags.join(",")}
+                    </p>
                   </a>
                 </li>
               );
