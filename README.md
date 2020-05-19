@@ -1,11 +1,11 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Esa Enhanced
+# <img src="public/icons/icon_48.png" width="45" align="left"> Refined Esa
 
-My Chrome Extension
+Extend your esa.io experience
 
 ## Features
 
-- Feature 1
-- Feature 2
+- 閲覧したページを表示
+- エディタに文字数を表示
 
 ## Install
 
@@ -14,4 +14,3 @@ My Chrome Extension
 ## Contribution
 
 Suggestions and pull requests are welcomed!.
-
