@@ -13,7 +13,7 @@ type Post = {
   wip: boolean;
   star: boolean;
   created_by: {
-    name: string;
+    screen_name: string;
     icon: string;
   };
 };
@@ -88,7 +88,7 @@ const init = () => {
       wip: exist(".is-wip.post-title"),
       star: exist(".is-starred.js-star-button"),
       created_by: {
-        name: author.querySelector(".post-author__user > a").textContent,
+        screen_name: author.querySelector(".post-author__user > a").textContent,
         icon: (author.querySelector(".thumbnail__image") as HTMLImageElement)
           .src,
       },
