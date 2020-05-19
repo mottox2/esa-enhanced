@@ -1,8 +1,10 @@
 import React from "dom-chef";
 import { historyStorage } from "../history";
+import { getTeam } from "../util";
 
-const reset = () =>
+const reset = (teamName: string) =>
   historyStorage.set(
+    teamName,
     {
       posts: {},
       historyIds: [],
@@ -14,29 +16,28 @@ const reset = () =>
   );
 
 const render = () => {
-  historyStorage.get((store) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (!tab) return;
-
-      const container = document.getElementById("history");
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    const tab = tabs[0];
+    if (!tab) return;
+    const teamName = getTeam(tab.url);
+    const container = document.getElementById("history");
+    if (!teamName) {
+      container.append(
+        (<div className="message">esa.ioで開いてください</div>) as any
+      );
+      return;
+    }
+    historyStorage.get(teamName, (store) => {
       container.append(
         (
           <div className="popup-title">
             <h1>最近読んだ記事</h1>
-            <div className="popup-reset" onClick={reset}>
+            <div className="popup-reset" onClick={() => reset(teamName)}>
               履歴を削除
             </div>
           </div>
         ) as any
       );
-      if (tab.url.search(/esa.io\//) === -1) {
-        container.append(
-          (<div className="message">esa.ioで開いてください</div>) as any
-        );
-        return;
-      }
-
       const origin = new URL(tab.url).origin;
 
       const { posts, historyIds } = store;

@@ -1,3 +1,5 @@
+import { getTeam } from "./util";
+
 const selectors = {
   id: ".post-header__id",
   name: ".post-title__name",
@@ -27,20 +29,28 @@ const selectAll = (selector: string) =>
 const select = (selector: string) => document.querySelector(selector);
 
 export const historyStorage = {
-  get: (cb: (store: HistoryStore) => void) => {
-    chrome.storage.sync.get(["posts", "historyIds"], (result: HistoryStore) => {
-      cb({ posts: {}, historyIds: [], ...result });
-    });
+  get: (teamName: string, cb: (store: HistoryStore) => void) => {
+    chrome.storage.sync.get(
+      [teamName],
+      (result: { [team: string]: HistoryStore }) => {
+        cb({ posts: {}, historyIds: [], ...result[teamName] });
+      }
+    );
   },
-  set: (store: HistoryStore, cb: () => void) => {
-    chrome.storage.sync.set(store, () => {
-      cb();
-    });
+  set: (teamName: string, store: HistoryStore, cb: () => void) => {
+    chrome.storage.sync.set(
+      {
+        [teamName]: store,
+      },
+      () => {
+        cb();
+      }
+    );
   },
 };
 
-const pushHistory = (post: Post) => {
-  historyStorage.get((result) => {
+const pushHistory = (teamName: string, post: Post) => {
+  historyStorage.get(teamName, (result) => {
     const newStore: HistoryStore = {
       posts: {
         [post.id]: post,
@@ -55,13 +65,15 @@ const pushHistory = (post: Post) => {
     // 件数より多かったら削除する何かの処理
     console.log(result);
 
-    historyStorage.set(newStore, () => {
+    historyStorage.set(teamName, newStore, () => {
       console.log("saved:", newStore);
     });
   });
 };
 
 const init = () => {
+  const teamName = getTeam(document.URL);
+
   if (document.URL.search(/esa.io\/posts\/\d+$/) > -1) {
     const author = select(".post-author");
     let post: Post = {
@@ -83,7 +95,7 @@ const init = () => {
     };
     console.log(post);
 
-    pushHistory(post);
+    pushHistory(teamName, post);
   }
 };
 
