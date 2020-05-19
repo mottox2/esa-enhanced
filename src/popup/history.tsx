@@ -5,7 +5,7 @@ const reset = () =>
   historyStorage.set(
     {
       posts: {},
-      ids: [],
+      historyIds: [],
     },
     () => {
       console.log("reset");
@@ -39,9 +39,9 @@ const render = () => {
 
       const origin = new URL(tab.url).origin;
 
-      const { posts, ids } = store;
+      const { posts, historyIds } = store;
 
-      if (ids.length === 0)
+      if (historyIds.length === 0)
         container.append(
           (<div className="message">最近見た記事はありません。</div>) as any
         );
@@ -49,7 +49,7 @@ const render = () => {
       container.append(
         (
           <ul className="histories">
-            {ids.map((postId) => {
+            {historyIds.map((postId) => {
               const post = posts[postId];
               return (
                 <li className={`history ${post.wip ? "is-wip" : ""}`}>

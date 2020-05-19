@@ -18,7 +18,7 @@ type Post = {
 
 export type HistoryStore = {
   posts: Record<number, Post>;
-  ids: number[];
+  historyIds: number[];
 };
 
 const exist = (selector: string) => Boolean(document.querySelector(selector));
@@ -28,8 +28,8 @@ const select = (selector: string) => document.querySelector(selector);
 
 export const historyStorage = {
   get: (cb: (store: HistoryStore) => void) => {
-    chrome.storage.sync.get(["posts", "ids"], (result: HistoryStore) => {
-      cb({ posts: {}, ids: [], ...result });
+    chrome.storage.sync.get(["posts", "historyIds"], (result: HistoryStore) => {
+      cb({ posts: {}, historyIds: [], ...result });
     });
   },
   set: (store: HistoryStore, cb: () => void) => {
@@ -46,7 +46,10 @@ const pushHistory = (post: Post) => {
         [post.id]: post,
         ...result.posts,
       },
-      ids: [post.id, ...result.ids.filter((id) => id !== post.id)], // new Set
+      historyIds: [
+        post.id,
+        ...result.historyIds.filter((id) => id !== post.id),
+      ], // new Set
     };
 
     // 件数より多かったら削除する何かの処理
@@ -59,7 +62,7 @@ const pushHistory = (post: Post) => {
 };
 
 const init = () => {
-  if (document.URL.search(/esa.io\/posts\/\d+/) > -1) {
+  if (document.URL.search(/esa.io\/posts\/\d+$/) > -1) {
     const author = select(".post-author");
     let post: Post = {
       id: Number(select(selectors.id).textContent.replace("#", "")),
