@@ -1,6 +1,6 @@
 # <img src="public/icons/icon_48.png" width="45" align="left"> Refined Esa
 
-Extend your esa.io experience
+![thumbnail](/thumbnail.png)
 
 ## Features
 
@@ -9,7 +9,7 @@ Extend your esa.io experience
 
 ## Install
 
-[**Chrome** extension]() <!-- TODO: Add chrome extension link inside parenthesis -->
+[**Chrome** extension](https://chrome.google.com/webstore/detail/refined-esa/eedehihkepmboojonddmcjmdppdaggpj)
 
 ## Contribution
 
