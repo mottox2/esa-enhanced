@@ -6,7 +6,7 @@ const selectors = {
   name: '.post-title__name',
 }
 
-type Post = {
+export type Post = {
   id: number
   name: string
   category: string
@@ -75,7 +75,9 @@ const pushHistory = (teamName: string, post: Post) => {
 const init = () => {
   const teamName = getTeam(document.URL)
 
-  render(historyStorage, teamName)
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey && e.keyCode === 75) render(teamName) // cmd + K
+  })
 
   if (document.URL.search(/esa.io\/posts\/\d+$/) > -1) {
     const author = select('.post-author')
