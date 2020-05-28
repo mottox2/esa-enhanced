@@ -14,9 +14,20 @@ html {
   color: #222;
 }
 
-body {
+/* body {
   width: 350px;
   height: 300px;
+} */
+
+.input {
+  width: 100%;
+  background-color: #eee;
+  appearance: none;
+  border: none;
+  font-size: 16px;
+  padding: 12px;
+  position: sticky;
+  top: 0;
 }
 
 .app {

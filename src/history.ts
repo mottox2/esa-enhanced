@@ -1,4 +1,5 @@
 import { getTeam } from './util'
+import { render } from './historyUI'
 
 const selectors = {
   id: '.post-header__id',
@@ -73,6 +74,8 @@ const pushHistory = (teamName: string, post: Post) => {
 
 const init = () => {
   const teamName = getTeam(document.URL)
+
+  render(historyStorage, teamName)
 
   if (document.URL.search(/esa.io\/posts\/\d+$/) > -1) {
     const author = select('.post-author')
