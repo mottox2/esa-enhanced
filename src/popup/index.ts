@@ -1,8 +1,8 @@
-import "../popup.css";
-import renderHistory from "./history";
+import '../popup.css'
+import renderHistory from './history'
 
 function init() {
-  renderHistory();
+  renderHistory()
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', init)

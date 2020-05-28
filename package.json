@@ -25,5 +25,11 @@
   "dependencies": {
     "crx-hotreload": "^1.0.4",
     "dom-chef": "^4.1.0"
+  },
+  "prettier": {
+    "jsxBracketSameLine": true,
+    "trailingComma": "all",
+    "semi": false,
+    "singleQuote": true
   }
 }

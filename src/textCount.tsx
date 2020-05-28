@@ -9,7 +9,7 @@ const style = {
   lineHeight: '56px',
 }
 
-let el: any;
+let el: any
 
 const init = () => {
   el = <div style={style}></div>
@@ -24,5 +24,6 @@ const onTextChange = () => {
 }
 
 export default {
-  init, onTextChange
+  init,
+  onTextChange,
 }
