@@ -43,6 +43,7 @@ export const render = (teamName: string) => {
   container.addEventListener('click', close)
   const ul = (<ul className="histories"></ul>) as any
   const el = (<div className="historyFilter">{ul}</div>) as any
+  let filterStr = ''
 
   renderItems(ul, teamName, (state) => {
     const input = ((
@@ -50,19 +51,22 @@ export const render = (teamName: string) => {
         type="text"
         className="input"
         placeholder="最近見た記事を検索"
-        onKeyUp={(event) => {
+        onKeyDown={(event) => {
           const { target, keyCode } = event
 
-          if (keyCode === 27) close() // ESC
+          if (keyCode === 27) return close() // ESC
 
-          state.forEach(({ node, post }) => {
-            const filterStr = target.value
-            node.classList.remove('is-visible')
-            const matched = [post.name, post.category, post.tags.join('')]
-              .join('')
-              .match(filterStr)
-            if (matched) node.classList.add('is-visible')
-          })
+          if (filterStr !== target.value) {
+            filterStr = target.value
+            el.scroll(0, 0)
+            state.forEach(({ node, post }) => {
+              node.classList.remove('is-visible')
+              const matched = [post.name, post.category, post.tags.join('')]
+                .join('')
+                .match(filterStr)
+              if (matched) node.classList.add('is-visible')
+            })
+          }
 
           state.forEach((state) => state.node.classList.remove('is-active'))
           if (keyCode === 38 || keyCode === 40 || keyCode === 13) {
@@ -73,11 +77,29 @@ export const render = (teamName: string) => {
           }
 
           const visibleItems = ul.querySelectorAll('li.is-visible')
-          visibleItems[current] &&
-            visibleItems[current].classList.add('is-active')
+          current = Math.max(-1, Math.min(visibleItems.length - 1, current))
 
           if (visibleItems.length === 0) {
             console.log('結果なし')
+          }
+
+          if (visibleItems[current]) {
+            visibleItems[current].classList.add('is-active')
+            const currentEl = visibleItems[current]
+            const inputHeight = 76
+            const scrollTop = el.scrollTop
+            const scrollBottom = scrollTop + el.offsetHeight
+            const optionTop = currentEl.offsetTop - inputHeight
+            const optionBottom =
+              optionTop + inputHeight + currentEl.offsetHeight
+            // console.log({ scrollTop, scrollBottom, optionTop, optionBottom })
+
+            if (scrollTop > optionTop) {
+              el.scroll(0, optionTop)
+            }
+            if (scrollBottom < optionBottom) {
+              el.scroll(0, optionBottom - el.offsetHeight)
+            }
           }
 
           if (event.keyCode === 13) {
