@@ -51,11 +51,11 @@ export const render = (teamName: string) => {
         type="text"
         className="input"
         placeholder="最近見た記事を検索"
-        onKeyDown={(event) => {
+        onClick={(event) => {
+          event.stopPropagation()
+        }}
+        onKeyUp={(event) => {
           const { target, keyCode } = event
-
-          if (keyCode === 27) return close() // ESC
-
           if (filterStr !== target.value) {
             filterStr = target.value
             el.scroll(0, 0)
@@ -67,6 +67,11 @@ export const render = (teamName: string) => {
               if (matched) node.classList.add('is-visible')
             })
           }
+        }}
+        onKeyDown={(event) => {
+          const { target, keyCode } = event
+
+          if (keyCode === 27) return close() // ESC
 
           state.forEach((state) => state.node.classList.remove('is-active'))
           if (keyCode === 38 || keyCode === 40 || keyCode === 13) {
