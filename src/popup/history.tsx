@@ -53,7 +53,8 @@ const render = () => {
             {historyIds.map((postId) => {
               const post = posts[postId]
               return (
-                <li className={`history ${post.wip ? 'is-wip' : ''}`}>
+                <li
+                  className={`history is-visible ${post.wip ? 'is-wip' : ''}`}>
                   <a target="_blank" href={`${origin}/posts/${post.id}`}>
                     <img src={post.created_by.icon} width={26} height={26} />
                     <p className="title">
