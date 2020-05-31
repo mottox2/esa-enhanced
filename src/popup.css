@@ -14,9 +14,35 @@ html {
   color: #222;
 }
 
-body {
+/* body {
   width: 350px;
   height: 300px;
+} */
+
+.historyFilter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: white;
+  border: 1px solid #eee;
+  z-index: 10;
+  width: 500px;
+  height: 350px;
+  overflow-y: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.input {
+  margin: 12px;
+  width: calc(100% - 24px);
+  background-color: #eee;
+  appearance: none;
+  border: none;
+  font-size: 16px;
+  padding: 12px;
+  position: sticky;
+  top: 12px;
 }
 
 .app {
@@ -39,6 +65,17 @@ body {
   cursor: pointer;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(2px);
+}
+
 .histories {
   list-style-type: none;
 }
@@ -46,10 +83,24 @@ body {
 .history {
   font-size: 14px;
   border-top: 1px solid #eee;
+
+  display: none;
 }
 
 .history.is-wip a {
   opacity: 0.5;
+}
+
+.history.is-active {
+  background-color: #ddd;
+}
+
+.history.is-hidden {
+  display: none;
+}
+
+.history.is-visible {
+  display: block;
 }
 
 .history:hover {

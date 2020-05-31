@@ -1,11 +1,12 @@
 import { getTeam } from './util'
+import { render } from './historyUI'
 
 const selectors = {
   id: '.post-header__id',
   name: '.post-title__name',
 }
 
-type Post = {
+export type Post = {
   id: number
   name: string
   category: string
@@ -73,6 +74,10 @@ const pushHistory = (teamName: string, post: Post) => {
 
 const init = () => {
   const teamName = getTeam(document.URL)
+
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey && e.keyCode === 75) render(teamName) // cmd + K
+  })
 
   if (document.URL.search(/esa.io\/posts\/\d+$/) > -1) {
     const author = select('.post-author')
