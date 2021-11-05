@@ -46,7 +46,7 @@ export const render = (teamName: string) => {
   let filterStr = ''
 
   renderItems(ul, teamName, (state) => {
-    const input = ((
+    const input = (
       <input
         type="text"
         className="input"
@@ -113,7 +113,7 @@ export const render = (teamName: string) => {
           }
         }}
       />
-    ) as any) as HTMLInputElement
+    ) as any as HTMLInputElement
     el.prepend(input)
     input.focus()
   })
