@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "watch": "NODE_ENV=development node build.js",
+    "watch:reload": "mv3-hot-reload",
     "build": "NODE_ENV=production node build.js"
   },
   "devDependencies": {
