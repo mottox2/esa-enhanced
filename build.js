@@ -13,8 +13,13 @@ const options = {
   bundle: true,
   watch: !isProduction,
   outdir: './build',
+  define: {
+    'process.env.NODE_ENV': `"${process.env.NODE_ENV}"`,
+    'process.env': '{}',
+  },
 }
 
+execSync('rm -rf build')
 execSync('mkdir -p build')
 execSync('cp -a public/ build/')
 esbuild.build(options)

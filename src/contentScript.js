@@ -11,5 +11,6 @@
 // For more information on Content Scripts,
 // See https://developer.chrome.com/extensions/content_scripts
 
+import 'mv3-hot-reload/content'
 import './content.css'
 import './entry'

@@ -1,3 +1,1 @@
-"use strict";
-
-require("crx-hotreload");
+import 'mv3-hot-reload/background'

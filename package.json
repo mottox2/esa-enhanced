@@ -4,16 +4,16 @@
   "description": "My Chrome Extension",
   "private": true,
   "scripts": {
-    "watch": "node build.js",
+    "watch": "NODE_ENV=development node build.js",
     "build": "NODE_ENV=production node build.js"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.112",
+    "@types/chrome": "^0.0.163",
     "esbuild": "^0.13.12"
   },
   "dependencies": {
-    "crx-hotreload": "^1.0.4",
-    "dom-chef": "^4.1.0"
+    "dom-chef": "^4.1.0",
+    "mv3-hot-reload": "^0.2.6"
   },
   "prettier": {
     "jsxBracketSameLine": true,
